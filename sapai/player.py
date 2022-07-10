@@ -118,7 +118,7 @@ class Player():
     
     
     @storeaction
-    def buy_pet(self, pet):
+    def buy_pet(self, pet, dest):
         """ Buy one pet from the shop """
         if len(self.team) == self._max_team:
             raise Exception("Attempted to buy Pet on full team")

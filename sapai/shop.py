@@ -151,7 +151,7 @@ class Shop():
         if idx < 0:
             raise Exception("Unrecognized Shop Object {}".format(obj))
         
-        del(self.shop_slots[idx])
+        self.shop_slots[idx] = None
         
     
     def index(self, obj):
@@ -209,7 +209,6 @@ class Shop():
                     slot.cost = slot.item.cost
         for team_slot in team:
             team_slot._pet.shop_ability(shop=self,trigger="roll")
-
     
     def freeze(self, idx):
         """
@@ -371,7 +370,12 @@ class Shop():
         
 
     def __len__(self):
-        return len(self.shop_slots)
+        count = 0
+        for iter_idx,slot in enumerate(self.shop_slots):
+            if slot != None:
+                count += 1
+
+        return count
     
     
     def __getitem__(self, idx):
@@ -601,8 +605,6 @@ class ShopSlot():
             self.item = Food(choice, seed_state=self.seed_state)
         else:
             raise Exception()
-        
-        
     
     def roll_levelup(self):
         rules = get_shop_rules(self.turn, pack=self.pack)
